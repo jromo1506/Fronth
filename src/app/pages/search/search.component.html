@@ -1,1 +1,9 @@
-<p>search works!</p>
+
+<div class="search-margin">
+    <h1 class="title">Search results for {{searchQuery}}</h1>
+
+    <div *ngIf="isLoading">Loading...</div> <!-- Indicador de carga -->
+    <div *ngIf="error">{{ error }}</div> <!-- Mensaje de error -->
+
+    <app-video-list *ngIf="!isLoading && !error" [videosYT]="videos"></app-video-list>
+</div>

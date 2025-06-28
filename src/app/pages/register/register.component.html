@@ -1,1 +1,51 @@
-<p>register works!</p>
+<div class="login">
+    <div class="login-form mt-lg ">
+    
+        <div  class="form-cont flex">
+   
+            <div class="login-form">
+                <h2>Register account</h2>
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                  <div class="conte p-md flex-sb">
+                    <div class="flex-col form-cont">
+                      <div class="mt-sm">
+                        <p>Name</p>
+                        <input formControlName="name" placeholder="Name">
+                      </div>
+                      <div class="mt-sm">
+                        <p>Last name</p>
+                        <input formControlName="lastName" placeholder="Last name">
+                      </div>
+                      <div class="mt-sm">
+                        <p>Email</p>
+                        <input formControlName="email" placeholder="Email">
+                      </div>
+                    </div>
+                    <div class="flex-col form-cont">
+                      <div class="mt-sm">
+                        <p>Username</p>
+                        <input formControlName="username" placeholder="Username">
+                      </div>
+                      <div class="mt-sm">
+                        <p>Password</p>
+                        <input formControlName="password" placeholder="Password" type="password">
+                      </div>
+                      <div class="mt-sm">
+                        <p>Repeat password</p>
+                        <div id="pwd" style="color: red; display: none;">Password mismatch</div>
+                        <input formControlName="repeatPassword" placeholder="Repeat password" type="password">
+                      </div>
+                      <br>
+                      <div>
+                        <button type="submit">Submit</button>
+                      </div>
+                      
+                    </div>
+                  </div>
+                 
+                </form>
+              </div>
+       
+
+    </div>
+</div>
