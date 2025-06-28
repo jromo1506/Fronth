@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { YoutubeService } from '../../services/youtube.service';
+import { VideoListComponent } from '../../components/video-list/video-list.component';
 
 @Component({
   selector: 'app-search',
-  imports: [],
+  imports: [VideoListComponent],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
 })

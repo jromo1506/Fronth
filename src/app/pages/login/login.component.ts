@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { UserAuthService } from '../../services/user-auth.service';
-
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [NgxCaptchaModule,ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

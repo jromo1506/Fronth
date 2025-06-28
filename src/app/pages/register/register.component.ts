@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
