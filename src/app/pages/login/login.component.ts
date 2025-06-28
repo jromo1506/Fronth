@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
+import { UserAuthService } from '../../services/user-auth.service';
 
 
 
@@ -15,7 +19,7 @@ export class LoginComponent {
   siteKey: string = "6LdoQikqAAAAAK04tMycZya478n91Wu38wELZGYB";
 
   constructor(
-    private userService: UsersService,
+    private userService: UserService,
     private router: Router,
     private auth: UserAuthService,
     private formBuilder: FormBuilder
