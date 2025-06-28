@@ -1,0 +1,49 @@
+<div class="login">
+    <div class="login-form mt-lg ">
+    
+        <div  class="form-cont flex">
+   
+            <div class="login-form txt-c">
+                <h2>Login to your account</h2>
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                  <div class="p-md flex-sb">
+                   
+                    <div class="flex-col form-cont">
+                        <div class="mt-sm flex-c">
+                          
+                            <input formControlName="username" placeholder="Username">
+                          </div>
+                          <div class="mt-sm flex-c">
+                            
+                            <input formControlName="password" placeholder="Password" type="password">
+                            
+                          
+                         
+                        
+                        </div>
+                        <div class="mt-sm">
+                          <!-- <a routerLink="/ForgotPassword">Forgot your password?</a> -->
+                        </div>
+                        <div class="mt-sm">
+                            <ngx-recaptcha2 #captchaElem
+                            [siteKey]="siteKey"
+                            formControlName="recaptcha">
+                          </ngx-recaptcha2>
+                        </div>
+                        <div id="pwd" style="color:red;display: none;">Incomplete fields</div>
+                        <br>
+                        <div>
+                           
+                            <button type="submit">Login</button>
+                        </div>
+
+                    </div>
+                    
+                  </div>
+                 
+                </form>
+              </div>
+       
+
+    </div>
+</div>

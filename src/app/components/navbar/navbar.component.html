@@ -1,0 +1,35 @@
+<div class="navbar w-100">
+    <div class="navbar-options">
+           <div class="logo-searchbar" >
+
+
+                <div class="logo" routerLink="Home">
+                    <h2>Innova <span class="tube">Tube</span></h2>
+                </div>
+            
+                
+
+                <div class="searchbar">
+                    <i class="fa-solid fa-magnifying-glass" routerLink="Search"></i>
+                    <input [(ngModel)]="searchQuery" placeholder="Enter search terms" (keydown.enter)="onSearch()">
+                </div>
+
+           </div>
+        
+
+
+           <div class="navbar-side-options ">
+                <div *ngIf="isLoggedIn" style="font-size: 20px;">
+                    {{username}} | <span class="logout" (click)="logout()">Logout</span>
+                </div>
+                <div *ngIf="!isLoggedIn" style="font-size: 20px;">
+                    <span class="logout"  routerLink="Login">Sign in</span> | <span class="logout"  routerLink="Register">Create account</span>
+                </div>
+                <div *ngIf="isLoggedIn">
+                    <i class="fa-solid fa-star" routerLink="Favorite"></i>
+                </div>
+           </div>
+           
+    </div>
+</div>
+
