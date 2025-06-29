@@ -2,12 +2,22 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import Swal from 'sweetalert2';
+import { trigger,transition,style,animate} from '@angular/animations';
+import { User } from '../../models/User';
 
 @Component({
   selector: 'app-register',
   imports: [ReactiveFormsModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
+  animations:[
+    trigger('slideInUp',[
+      transition(':enter',[
+        style({opacity:0,transform:'translateY(-10px)'}),
+        animate('500ms ease-out',style({opacity:1,transform:'translateY(0'}))
+      ])
+    ])
+  ]
 })
 export class RegisterComponent {
 
@@ -30,8 +40,16 @@ export class RegisterComponent {
     if (this.loginForm.valid) {
       if(this.loginForm.value.password === this.loginForm.value.repeatPassword){
 
+         const user: User = {
+          name: this.loginForm.value.name,
+          lastName: this.loginForm.value.lastName,
+          username: this.loginForm.value.username,
+          email: this.loginForm.value.email,
+          password: this.loginForm.value.password
+        // No incluyas repeatPassword
+        };
 
-        this.userService.addUser(this.loginForm.value).subscribe(data=>{
+        this.userService.addUser(user).subscribe(data=>{
 
           Swal.fire({
             title: 'Success',

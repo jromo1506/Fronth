@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { UserAuthService } from '../../services/user-auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,RouterLink],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -14,26 +17,26 @@ title = 'Fronth';
   isLoggedIn = false;
   username: string | null = null;
 
+ constructor(private router:Router,private authService: UserAuthService) {
+    
+  }
 
    ngOnInit(): void {
     // Suscribirse a los cambios en las credenciales
 
-    /*
+    
     this.authService.credentials$.subscribe(credentials => {
       this.isLoggedIn = !!credentials;
       this.username = credentials ? credentials.username : null;
     });
-    */
+    
   }
 
 
   ngAfterViewInit(): void {
     // Inicializa los tooltips
-    /*
-    (document.querySelectorAll('[data-bs-toggle="tooltip"]') as NodeListOf<HTMLElement>).forEach((tooltip) => {
-      new bootstrap.Tooltip(tooltip);
-    });
-    */
+ 
+    
 
     
   }
@@ -41,12 +44,12 @@ title = 'Fronth';
 
 
     onSearch(): void {
-      /*
+      
       if (this.searchQuery.trim()) {
         this.router.navigate(['/Search'], { queryParams: { query: this.searchQuery } });
       }
 
-      */
+      
     }
 
 
@@ -55,7 +58,7 @@ title = 'Fronth';
 
 
     logout(): void {
-      /*
+      
       this.authService.clearCredentials();
       
       Swal.fire({
@@ -71,6 +74,6 @@ title = 'Fronth';
         
         this.router.navigate(['/Home']);
       });;
-      */
+      
     }
 }

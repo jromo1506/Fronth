@@ -2,10 +2,11 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 import { VideosService } from '../../services/videos.service';
 import { UserAuthService } from '../../services/user-auth.service';
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-video-list',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './video-list.component.html',
   styleUrl: './video-list.component.scss'
 })

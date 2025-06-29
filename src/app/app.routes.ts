@@ -6,7 +6,7 @@ import { SearchComponent } from './pages/search/search.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { FavoritesComponent } from './pages/favorites/favorites.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'Home', component: HomeComponent },
   { path: 'Login', component:  LoginComponent},

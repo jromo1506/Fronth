@@ -19,15 +19,20 @@
 
 
            <div class="navbar-side-options ">
-                <div *ngIf="isLoggedIn" style="font-size: 20px;">
-                    {{username}} | <span class="logout" (click)="logout()">Logout</span>
+                <div *ngIf="isLoggedIn" style="font-size: 20px; ">
+                  <i class="fa-solid fa-user"></i>  {{username}} | 
+                   <span class="logout cursor-pointer" (click)="logout()"> 
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout</span>
+                 <div *ngIf="isLoggedIn" >
+                    <span class="mx-2 text-md favorites cursor-pointer"> <i class="fa-solid fa-star" routerLink="Favorite"></i>Favorites</span>
+                </div>
                 </div>
                 <div *ngIf="!isLoggedIn" style="font-size: 20px;">
-                    <span class="logout"  routerLink="Login">Sign in</span> | <span class="logout"  routerLink="Register">Create account</span>
+                    <span class="logout cursor-pointer"  routerLink="Login">Sign in</span> | <span class="logout cursor-pointer"  routerLink="Register">Create account</span>
+                
                 </div>
-                <div *ngIf="isLoggedIn">
-                    <i class="fa-solid fa-star" routerLink="Favorite"></i>
-                </div>
+
+               
            </div>
            
     </div>

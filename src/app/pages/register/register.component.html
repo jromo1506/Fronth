@@ -1,9 +1,9 @@
-<div class="login">
+<div class="login" @slideInUp>
     <div class="login-form mt-lg ">
     
-        <div  class="form-cont flex">
+        <div  class="">
    
-            <div class="login-form">
+            <div class="">
                 <h2>Register account</h2>
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                   <div class="conte p-md flex-sb">
@@ -20,7 +20,11 @@
                         <p>Email</p>
                         <input formControlName="email" placeholder="Email">
                       </div>
+                          <div class="mt-sm">
+                        <button type="submit ">Submit</button>
+                      </div>
                     </div>
+                    
                     <div class="flex-col form-cont">
                       <div class="mt-sm">
                         <p>Username</p>
@@ -36,11 +40,10 @@
                         <input formControlName="repeatPassword" placeholder="Repeat password" type="password">
                       </div>
                       <br>
-                      <div>
-                        <button type="submit">Submit</button>
-                      </div>
+                  
                       
                     </div>
+                    
                   </div>
                  
                 </form>

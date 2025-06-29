@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { VideosService } from '../../services/videos.service';
 import { UserAuthService } from '../../services/user-auth.service';
 import { YoutubeService } from '../../services/youtube.service';
+import { VideoListComponent } from '../../components/video-list/video-list.component';
 
 @Component({
   selector: 'app-favorites',
-  imports: [],
+  imports: [VideoListComponent],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.scss'
 })

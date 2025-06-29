@@ -1,1 +1,35 @@
-<p>video-carrousel works!</p>
+
+<div class="carrousel-margin" @slideInUp>
+  <div class="owl-carousel owl-theme">
+
+    <!-- <div *ngIf="videosYT && videosYT.length > 0; else noVideos">
+      
+    </div> -->
+    <div *ngFor="let video of videosYT" class="video-card">
+      <!--<img [src]="video.snippet.thumbnails.medium.url" alt="{{ video.snippet.title }}">-->
+      <div class="video-display">
+        
+      </div> 
+      <div class="flex video-info">
+        <div class="channel-icon">
+          <!-- Aquí puedes usar el icono del canal o una imagen por defecto -->
+          <!-- <img [src]="video.snippet.thumbnails.default.url" alt="{{ video.snippet.channelTitle }}" class="channel-icon-img"> -->
+        </div>
+        <div class="video-title">
+         
+          <p><strong>{{ video.snippet.title }}</strong></p>
+          <p>{{ video.snippet.channelTitle }}</p>
+        </div>
+      </div>
+    </div>
+
+   
+  </div>
+
+</div>
+<ng-template #noVideos>
+  <p>No videos found.</p>
+</ng-template>
+
+
+  

@@ -1,0 +1,60 @@
+
+
+.video-list{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.video-container{
+    display:flex;
+    width: 100%;
+    height: 18rem;
+  
+    color: var(--text-light);
+}
+
+.video-image{
+    width: 35%;
+    background-color: burlywood;
+}
+
+.video-info{
+    flex: 1;
+    background-color: rgb(35, 35, 35);
+
+}
+
+.star{
+    cursor: pointer;
+}
+
+img{
+    width: 33%;
+}
+
+.desc{
+    font-size: 5px;
+}
+
+@media (max-width: 600px) {
+
+    .video-container{
+        display:flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+      
+        color: var(--text-light);
+    }
+
+    .video-img{
+        width: 100%;
+    }
+
+    img{
+        width: 100%;
+    }
+
+
+}

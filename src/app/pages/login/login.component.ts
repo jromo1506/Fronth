@@ -5,13 +5,22 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { UserAuthService } from '../../services/user-auth.service';
 import { NgxCaptchaModule } from 'ngx-captcha';
-
+import { trigger,transition,style,animate} from '@angular/animations';
+import { User } from '../../models/User';
 
 @Component({
   selector: 'app-login',
   imports: [NgxCaptchaModule,ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
+  animations:[
+    trigger('slideInUp',[
+      transition(':enter',[
+        style({opacity:0,transform:'translateY(-10px)'}),
+        animate('500ms ease-out',style({opacity:1,transform:'translateY(0'}))
+      ])
+    ])
+  ]
 })
 export class LoginComponent {
 
@@ -41,9 +50,12 @@ export class LoginComponent {
   }
 
   authUser() {
-    this.userService.authUser(this.loginForm.value).subscribe(
+    const { username, password } = this.loginForm.value;
+    this.userService.authUser({ username, password }).subscribe(
       (found: any) => {
         this.auth.saveCredentials(found._id, found.username);
+
+
 
         Swal.fire({
           title: 'Success',

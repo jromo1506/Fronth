@@ -19,6 +19,14 @@
     transform: scale(1.05);
 }
 
+.logo-searchbar {
+  display: flex;
+  align-items: center; /* centra verticalmente */
+  justify-content: space-between; /* separa logo y searchbar */
+  height: 60px; /* o el alto que necesites */
+  padding: 0 16px;
+}
+
 
 .tube{
     padding: 10px;
@@ -38,8 +46,7 @@
 }
 
 .navbar-side-options i:hover{
-    display: flex;
-    justify-content: space-around;
+
     transition: all ease 0.3s;
 }
 
@@ -94,10 +101,14 @@
 }
 
 .logout:hover{
-    color: #FF7517;
+    color: #FF7517 !important;
     cursor: pointer;
 }
 
+
+.favorites:hover, .logout:hover{
+    color: #FF7517;
+}
 
 /* Media query para pantallas de al menos 600px de ancho */
 @media (max-width: 600px) {
