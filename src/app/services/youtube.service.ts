@@ -22,7 +22,7 @@ export class YoutubeService {
     return this.http.get(url);
   }
 
-  // Obtener videos aleatorios
+
   getRandomVideos(maxResults: number): Observable<any> {
     const randomKeywords = ['code', 'angular', 'nodejs', 'asp.net', 'tutorial', 'linux'];
     const keyword = randomKeywords[Math.floor(Math.random() * randomKeywords.length)];
@@ -35,13 +35,13 @@ export class YoutubeService {
     
     return this.http.get<any>(searchUrl).pipe(
       tap(response => {
-        console.log('Search response:', response); // Verifica la respuesta aquí
+        console.log('Search response:', response);
       }),
       map((response: any) => {
         if (!response || !response.items) {
           throw new Error('Unexpected response format');
         }
-        return response.items; // Retorna solo los videos
+        return response.items;
       }),
       catchError(error => {
         console.error('Error in searchVideos:', error);

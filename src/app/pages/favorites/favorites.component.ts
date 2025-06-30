@@ -41,7 +41,7 @@ credentials: { userId: string, username: string } | null = null;
 
   findVideos(videosFind: any[]) {
     this.loading = true;
-    this.foundVideos = []; // Limpia el array antes de empezar
+    this.foundVideos = []; 
 
     const videoIds = videosFind.map(videofind => videofind.id_video);
 
@@ -54,7 +54,7 @@ credentials: { userId: string, username: string } | null = null;
               id: video.id,
               snippet: video.snippet,
               statistics: video.statistics || {},
-              isStarred: false, // Puedes manejar si un video tiene estrella o no
+              isStarred: false,
             };
             this.foundVideos.push(transformedVideo);
           } else {
@@ -73,7 +73,7 @@ credentials: { userId: string, username: string } | null = null;
 
 
   toggleStar(videoId: string) {
-    // Lógica para manejar el clic en la estrella
+    
     const video = this.foundVideos.find(v => v.id === videoId);
     if (video) {
       video.isStarred = !video.isStarred;
