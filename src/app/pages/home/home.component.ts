@@ -12,9 +12,35 @@ import { CommonModule } from '@angular/common';
 })
 export class HomeComponent {
 
-  //videos: any[] = [];
+  videos: any[] = [];
+
+  
+  videoInfo: any;
+
+  constructor(private youtubeService: YoutubeService) {}
+
+  ngOnInit() {
+    const videoId = 'ID_DEL_VIDEO';
+    this.youtubeService.getVideoInfo(videoId).subscribe(data => {
+      this.videoInfo = data.items[0];
+    });
+
+    const maxResults = 5; // Puedes ajustar este número según tus necesidades
+    this.youtubeService.getRandomVideos(maxResults).subscribe(data => {
+      this.videos = data.items;
+    });
+  }
+
+
+
+
+
+
+
 
   //MOCK VIDEOS
+
+  /*
   videos: any[] = [
   {
     id: { videoId: 'mock1' },
@@ -59,20 +85,6 @@ export class HomeComponent {
     isStarred: true
   }
 ];
-  videoInfo: any;
-
-  constructor(private youtubeService: YoutubeService) {}
-
-  ngOnInit() {
-    const videoId = 'ID_DEL_VIDEO';
-    this.youtubeService.getVideoInfo(videoId).subscribe(data => {
-      this.videoInfo = data.items[0];
-    });
-
-    const maxResults = 5; // Puedes ajustar este número según tus necesidades
-    this.youtubeService.getRandomVideos(maxResults).subscribe(data => {
-      this.videos = data.items;
-    });
-  }
+*/
 
 }
