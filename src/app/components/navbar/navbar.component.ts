@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class NavbarComponent {
   title = 'Fronth';
-    searchQuery: string = '';
+  searchQuery: string = '';
   isLoggedIn = false;
   username: string | null = null;
 
@@ -23,8 +23,6 @@ export class NavbarComponent {
 
    ngOnInit(): void {
     // Suscribirse a los cambios en las credenciales
-
-    
     this.authService.credentials$.subscribe(credentials => {
       this.isLoggedIn = !!credentials;
       this.username = credentials ? credentials.username : null;
@@ -34,11 +32,7 @@ export class NavbarComponent {
 
 
   ngAfterViewInit(): void {
-    // Inicializa los tooltips
- 
-    
 
-    
   }
 
 
