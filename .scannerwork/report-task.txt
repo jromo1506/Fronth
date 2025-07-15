@@ -1,6 +1,6 @@
-projectKey=PruebaAngular
+projectKey=AngularPruebaNueva
 serverUrl=http://localhost:9000
 serverVersion=25.7.0.110598
-dashboardUrl=http://localhost:9000/dashboard?id=PruebaAngular
-ceTaskId=038b33e9-db4e-48da-9b00-a75a979f0489
-ceTaskUrl=http://localhost:9000/api/ce/task?id=038b33e9-db4e-48da-9b00-a75a979f0489
+dashboardUrl=http://localhost:9000/dashboard?id=AngularPruebaNueva
+ceTaskId=6bd93592-8f1a-485b-808f-c89c489f3077
+ceTaskUrl=http://localhost:9000/api/ce/task?id=6bd93592-8f1a-485b-808f-c89c489f3077
