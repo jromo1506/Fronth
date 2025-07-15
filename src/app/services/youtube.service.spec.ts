@@ -1,12 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
 import { YoutubeService } from './youtube.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('YoutubeService', () => {
   let service: YoutubeService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports:[HttpClientTestingModule],
+      providers:[]
+    });
     service = TestBed.inject(YoutubeService);
   });
 

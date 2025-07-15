@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-title = 'Fronth';
+  title = 'Fronth';
     searchQuery: string = '';
   isLoggedIn = false;
   username: string | null = null;
