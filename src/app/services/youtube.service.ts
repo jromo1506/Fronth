@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, tap } from 'rxjs';
+import { environment } from '../environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class YoutubeService {
 
- private apiUrl = 'https://www.googleapis.com/youtube/v3';
-  private apiKey = 'AIzaSyDku2evqiECm-6uqW4wZnQLGxEHwYjalB8';
+ private apiUrl = environment.GoogleAPI;
+  private apiKey = environment.YoutubeAPI_KEY;
   private videosSubject = new BehaviorSubject<any[]>([]);
   videos$ = this.videosSubject.asObservable();
 
