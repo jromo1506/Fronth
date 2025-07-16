@@ -11,15 +11,37 @@ describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
 
   const mockVideoInfoResponse = {
-    items: [{ id: 'ID_DEL_VIDEO', snippet: { title: 'Test Video' } }]
+    snippet: {
+      thumbnails: {
+        medium: {
+          url: 'https://fakeurl.com/thumbnail.jpg'
+        }
+      },
+      title: 'Test Video'
+    },
+    id: 'ID_DEL_VIDEO'
   };
 
-  const mockRandomVideosResponse = {
-    items: [
-      { id: 'v1', snippet: { title: 'Video 1' } },
-      { id: 'v2', snippet: { title: 'Video 2' } }
-    ]
-  };
+  const mockRandomVideosResponse = [
+    {
+      snippet: {
+        thumbnails: {
+          medium: { url: 'https://fakeurl.com/video1.jpg' }
+        },
+        title: 'Video 1'
+      },
+      id: 'v1'
+    },
+    {
+      snippet: {
+        thumbnails: {
+          medium: { url: 'https://fakeurl.com/video2.jpg' }
+        },
+        title: 'Video 2'
+      },
+      id: 'v2'
+    }
+  ];
 
   const youtubeServiceMock = {
     getVideoInfo: jasmine.createSpy('getVideoInfo').and.returnValue(of(mockVideoInfoResponse)),
@@ -28,17 +50,17 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VideoCarrouselComponent, CommonModule],
+      imports: [HomeComponent, VideoCarrouselComponent, CommonModule],
       providers: [
         provideNoopAnimations(),
         { provide: YoutubeService, useValue: youtubeServiceMock }
       ],
-      declarations: [HomeComponent] // No es standalone, va en declarations
+      declarations: [] // vacío porque los componentes son standalone
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges();  // ngOnInit se ejecuta y carga datos mock
   });
 
   it('debería crear el componente', () => {
@@ -46,12 +68,10 @@ describe('HomeComponent', () => {
   });
 
   it('ngOnInit debería cargar videoInfo y videos', () => {
-    component.ngOnInit();
-
     expect(youtubeServiceMock.getVideoInfo).toHaveBeenCalledWith('ID_DEL_VIDEO');
     expect(youtubeServiceMock.getRandomVideos).toHaveBeenCalledWith(5);
 
-    expect(component.videoInfo).toEqual(mockVideoInfoResponse.items[0]);
-    expect(component.videos).toEqual(mockRandomVideosResponse.items);
+    expect(component.videoInfo).toEqual(mockVideoInfoResponse);
+    expect(component.videos).toEqual(mockRandomVideosResponse);
   });
 });

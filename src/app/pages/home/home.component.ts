@@ -15,7 +15,14 @@ export class HomeComponent {
   videos: any[] = [];
 
   
-  videoInfo: any;
+  videoInfo: any = {
+    snippet: {
+      thumbnails: {
+        medium: { url: '' }
+      },
+      title: ''
+    }
+  };
 
   constructor(private youtubeService: YoutubeService) {}
 
