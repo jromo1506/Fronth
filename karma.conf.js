@@ -27,12 +27,12 @@ module.exports = function (config) {
       dir: require('path').join(__dirname, './coverage/fronth'),
       subdir: '.',
       reporters: [
-        {type:'lcov'},
+        {type:'lcovonly'},
         { type: 'html' },
         { type: 'text-summary' }
       ]
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'kjhtml','coverage'],
     browsers: ['Chrome'],
     restartOnFileChange: true
   });

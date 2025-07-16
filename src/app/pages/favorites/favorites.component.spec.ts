@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { FavoritesComponent } from './favorites.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -72,21 +72,21 @@ let component: FavoritesComponent;
     expect(component.findVideos).toHaveBeenCalledWith(likedVideosMock);
   });
 
-  it('debería llenar foundVideos con los datos transformados', (done) => {
-    component.ngOnInit();
 
-    setTimeout(() => {
-      expect(component.foundVideos.length).toBe(2);
-      expect(component.foundVideos[0]).toEqual(jasmine.objectContaining({
-        id: 'abc',
-        snippet: jasmine.any(Object),
-        statistics: jasmine.any(Object),
-        isStarred: false
-      }));
-      expect(component.loading).toBeTrue(); // coincide porque es el último en completarse
-      done();
-    }, 100);
-  });
+  it('debería llenar foundVideos con los datos transformados', fakeAsync(() => {
+    component.ngOnInit();
+    tick(); 
+
+    expect(component.foundVideos.length).toBe(2);
+    expect(component.foundVideos[0]).toEqual(jasmine.objectContaining({
+      id: 'abc',
+      snippet: jasmine.any(Object),
+      statistics: jasmine.any(Object),
+      isStarred: false
+    }));
+    expect(component.loading).toBeTrue(); 
+  }));
+
 
   it('debería alternar isStarred con toggleStar', () => {
     component.foundVideos = [

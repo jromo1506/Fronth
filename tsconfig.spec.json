@@ -11,5 +11,10 @@
   "include": [
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
-  ]
+  ],
+  
+  "angularCompilerOptions": {
+    "enableIvy": true,
+    "compilationMode": "partial"
+  }
 }

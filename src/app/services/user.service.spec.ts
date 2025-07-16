@@ -1,57 +1,80 @@
 import { TestBed } from '@angular/core/testing';
-import { UserAuthService } from './user-auth.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { UserService } from './user.service';
+import { GolbalApiService } from './golbal-api.service';
+import { User } from '../models/User';
 
-describe('UserAuthService', () => {
-  let service: UserAuthService;
-  const mockKey = 'auth-credentials';
+describe('UserService', () => {
+  let service: UserService;
+  let httpMock: HttpTestingController;
+  let apiServiceSpy: jasmine.SpyObj<GolbalApiService>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(UserAuthService);
-    localStorage.clear();
+    const spy = jasmine.createSpyObj('GolbalApiService', ['getURL']);
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [
+        UserService,
+        { provide: GolbalApiService, useValue: spy }
+      ]
+    });
+
+    service = TestBed.inject(UserService);
+    httpMock = TestBed.inject(HttpTestingController);
+    apiServiceSpy = TestBed.inject(GolbalApiService) as jasmine.SpyObj<GolbalApiService>;
+    apiServiceSpy.getURL.and.returnValue('http://localhost/api');
   });
 
   afterEach(() => {
-    localStorage.clear();
+    httpMock.verify();
   });
 
-  it('debería crear el servicio', () => {
-    expect(service).toBeTruthy();
+  it('debería enviar POST a /addUser', () => {
+    const user: User = { email: 'test@example.com', password: '1234' } as User;
+
+    service.addUser(user).subscribe();
+
+    const req = httpMock.expectOne('http://localhost/api/addUser');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(user);
   });
 
-  it('saveCredentials debería guardar en localStorage y emitir por credentials$', (done) => {
-    const userId = 'u123';
-    const username = 'testuser';
+  it('debería enviar POST a /getUser', () => {
+    const partialUser = { email: 'test@example.com' };
 
-    service.credentials$.subscribe(value => {
-      if (value) {
-        expect(value).toEqual({ userId, username });
-        expect(localStorage.getItem(mockKey)).toBe(JSON.stringify({ userId, username }));
-        done();
-      }
-    });
+    service.getUser(partialUser).subscribe();
 
-    service.saveCredentials(userId, username);
+    const req = httpMock.expectOne('http://localhost/api/getUser');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(partialUser);
   });
 
-  it('getCredentials debería devolver datos desde localStorage', () => {
-    const stored = { userId: 'a1', username: 'storedUser' };
-    localStorage.setItem(mockKey, JSON.stringify(stored));
+  it('debería enviar POST a /authUser', () => {
+    const user = { email: 'test@example.com', password: '1234' };
 
-    const result = service.getCredentials();
-    expect(result).toEqual(stored);
+    service.authUser(user).subscribe();
+
+    const req = httpMock.expectOne('http://localhost/api/authUser');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(user);
   });
 
-  it('clearCredentials debería limpiar localStorage y emitir null', (done) => {
-    service.saveCredentials('id', 'name');
+  it('debería enviar POST a /forgotPasswordEmail', () => {
+    const email = { email: 'test@example.com' };
 
-    service.credentials$.subscribe(value => {
-      if (value === null) {
-        expect(localStorage.getItem(mockKey)).toBeNull();
-        done();
-      }
-    });
+    service.forgotPassword(email).subscribe();
 
-    service.clearCredentials();
+    const req = httpMock.expectOne('http://localhost/api/forgotPasswordEmail');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(email);
+  });
+
+  it('debería enviar GET a /resetPassword/:token', () => {
+    const token = 'abcdef';
+
+    service.verifyToken(token).subscribe();
+
+    const req = httpMock.expectOne('/resetPassword/abcdef');
+    expect(req.request.method).toBe('GET');
   });
 });
