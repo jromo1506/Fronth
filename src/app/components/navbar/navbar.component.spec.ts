@@ -40,7 +40,7 @@ describe('NavbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debería decir "Hola"', () => {
+  it('debería decir "Fronth"', () => {
     expect(component.title).toBe('Fronth');
   });
 

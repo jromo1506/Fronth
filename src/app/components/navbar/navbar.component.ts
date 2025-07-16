@@ -31,12 +31,6 @@ export class NavbarComponent {
   }
 
 
-  ngAfterViewInit(): void {
-
-  }
-
-
-
     onSearch(): void {
       
       if (this.searchQuery.trim()) {

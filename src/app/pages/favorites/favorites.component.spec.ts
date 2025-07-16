@@ -1,103 +1,88 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FavoritesComponent } from './favorites.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of, Subject } from 'rxjs';
 import { VideosService } from '../../services/videos.service';
-import { UserService } from '../../services/user.service';
+import { UserAuthService } from '../../services/user-auth.service';
 import { YoutubeService } from '../../services/youtube.service';
 import { VideoListComponent } from '../../components/video-list/video-list.component';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { of } from 'rxjs';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 describe('FavoritesComponent', () => {
-let component: FavoritesComponent;
+  let component: FavoritesComponent;
   let fixture: ComponentFixture<FavoritesComponent>;
-
-  const mockCredentials = { userId: '123', username: 'testuser' };
-  const likedVideosMock = [{ id_video: 'abc' }, { id_video: 'def' }];
-
-  const videoInfoResponse = (id: string) => ({
-    items: [{
-      id,
-      snippet: { title: `Video ${id}` },
-      statistics: { viewCount: 1000 }
-    }]
-  });
-
-  const mockUserAuthService = {
-    credentials$: of(mockCredentials)
-  };
-
-  const mockVideosService = {
-    getLikedVideos: jasmine.createSpy('getLikedVideos')
-      .and.returnValue(of(likedVideosMock))
-  };
-
-  const mockYoutubeService = {
-    getVideoInfo: jasmine.createSpy('getVideoInfo')
-      .and.callFake((id: string) => of(videoInfoResponse(id)))
-  };
+  let videosServiceSpy: jasmine.SpyObj<VideosService>;
+  let userAuthServiceMock: { credentials$: Subject<any> };
+  let youtubeServiceSpy: jasmine.SpyObj<YoutubeService>;
 
   beforeEach(async () => {
+    videosServiceSpy = jasmine.createSpyObj('VideosService', ['getLikedVideos']);
+    youtubeServiceSpy = jasmine.createSpyObj('YoutubeService', ['getVideoInfo']);
+    userAuthServiceMock = { credentials$: new Subject() };
+
     await TestBed.configureTestingModule({
-      imports: [FavoritesComponent, VideoListComponent],
+      imports: [CommonModule, VideoListComponent,FavoritesComponent],
+      declarations: [],
       providers: [
-        provideNoopAnimations(),
-        { provide: VideosService, useValue: mockVideosService },
-        { provide: UserService, useValue: mockUserAuthService },
-        { provide: YoutubeService, useValue: mockYoutubeService }
+        { provide: VideosService, useValue: videosServiceSpy },
+        { provide: YoutubeService, useValue: youtubeServiceSpy },
+        { provide: UserAuthService, useValue: userAuthServiceMock }
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FavoritesComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('debería crear el componente', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debería asignar las credenciales y marcar como logueado', () => {
-    expect(component.credentials).toEqual(mockCredentials);
+  it('debería establecer isLogged en true y guardar credenciales cuando recibe datos', () => {
+    const mockCreds = { userId: '123', username: 'test' };
+    userAuthServiceMock.credentials$.next(mockCreds);
+    expect(component.credentials).toEqual(mockCreds);
     expect(component.isLogged).toBeTrue();
   });
 
-  it('debería llamar getLikedVideos y luego findVideos al inicializar', () => {
-    spyOn(component, 'findVideos').and.callThrough();
+  it('debería llamar getLikedVideos y findVideos en ngOnInit si hay credenciales', fakeAsync(() => {
+    const mockCreds = { userId: '123', username: 'test' };
+    const mockLikes = [{ id_video: 'abc123' }];
+    const mockVideoResponse = {
+      items: [{
+        id: 'abc123',
+        snippet: { title: 'Test Video' },
+        statistics: { viewCount: 1000 }
+      }]
+    };
+
+    userAuthServiceMock.credentials$.next(mockCreds);
+    component.credentials = mockCreds;
+
+    videosServiceSpy.getLikedVideos.and.returnValue(of(mockLikes));
+    youtubeServiceSpy.getVideoInfo.and.returnValue(of(mockVideoResponse));
 
     component.ngOnInit();
+    tick();
 
-    expect(mockVideosService.getLikedVideos).toHaveBeenCalledWith(mockCredentials.userId);
-    expect(component.findVideos).toHaveBeenCalledWith(likedVideosMock);
-  });
+    expect(videosServiceSpy.getLikedVideos).toHaveBeenCalledWith('123');
+    expect(youtubeServiceSpy.getVideoInfo).toHaveBeenCalledWith('abc123');
+    expect(component.foundVideos.length).toBe(1);
+    expect(component.foundVideos[0].id).toBe('abc123');
+    expect(component.loading).toBeTrue(); // async still resolving until tick completes all
 
-
-  it('debería llenar foundVideos con los datos transformados', fakeAsync(() => {
-    component.ngOnInit();
-    tick(); 
-
-    expect(component.foundVideos.length).toBe(2);
-    expect(component.foundVideos[0]).toEqual(jasmine.objectContaining({
-      id: 'abc',
-      snippet: jasmine.any(Object),
-      statistics: jasmine.any(Object),
-      isStarred: false
-    }));
-    expect(component.loading).toBeTrue(); 
+    tick(); // simulate full async cycle
+    expect(component.loading).toBeTrue(); // remains true if only 1 item
   }));
 
+  it('debería alternar isStarred correctamente en toggleStar', () => {
+    const video = { id: 'vid1', isStarred: false };
+    component.foundVideos = [video];
 
-  it('debería alternar isStarred con toggleStar', () => {
-    component.foundVideos = [
-      { id: 'abc', isStarred: false },
-      { id: 'def', isStarred: true }
-    ];
+    component.toggleStar('vid1');
+    expect(video.isStarred).toBeTrue();
 
-    component.toggleStar('abc');
-    expect(component.foundVideos[0].isStarred).toBeTrue();
-
-    component.toggleStar('def');
-    expect(component.foundVideos[1].isStarred).toBeFalse();
+    component.toggleStar('vid1');
+    expect(video.isStarred).toBeFalse();
   });
 });
