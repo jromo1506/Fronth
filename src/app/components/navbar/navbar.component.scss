@@ -21,6 +21,7 @@
 
 .logo-searchbar {
   display: flex;
+   flex: 1;
   align-items: center; /* centra verticalmente */
   justify-content: space-between; /* separa logo y searchbar */
   height: 60px; /* o el alto que necesites */
@@ -33,7 +34,7 @@
     color: var(--text-light);
     background-color: #FF7517;
     border-radius: 5px;
-    padding: 5px;
+   
 }
 
 
@@ -55,13 +56,6 @@
     cursor: pointer;
 }
 
-
-.logo-searchbar{
-    display: flex;
-    flex: 1;
-    color: var(--text-light);
-   
-}
 
 .logo{
     transition: all ease 0.3s;

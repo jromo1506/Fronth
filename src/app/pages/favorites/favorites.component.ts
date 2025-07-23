@@ -8,7 +8,6 @@ import { VideoListComponent } from '../../components/video-list/video-list.compo
   selector: 'app-favorites',
   imports: [VideoListComponent],
   templateUrl: './favorites.component.html',
-  styleUrl: './favorites.component.scss'
 })
 export class FavoritesComponent {
 credentials: { userId: string, username: string } | null = null;
