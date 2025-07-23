@@ -1,30 +1,12 @@
 
 <div class="video-list">
 
-<!-- 
-    <div *ngFor="let video of videosYT">
-        <h3>{{ video.snippet.title }}</h3>
-        <img [src]="video.snippet.thumbnails.default.url" alt="{{ video.snippet.title }}">
-        <p>{{ video.snippet.description }}</p>
-      </div> -->
 
-
-
-   
-
-
-
-
-    <!-- CONTENEDORES DE LA API -->
-
-    <!-- CONTENEOR DE VIDEO -->
     <div *ngFor="let video of videosYT" class="video-container mt-md">
 
       <img [src]="video.snippet.thumbnails.medium.url" alt="{{ video.snippet.title }}"> 
      
-        <!--<div class="video-image">
-        
-        </div> -->
+       
         <div class="video-info p-md">
           <div class="title-star flex-sb w-100">
             <div>
@@ -35,22 +17,18 @@
           </div>
           </div>
           <div>
-            <!-- Aquí se muestra un texto fijo ya que no tenemos información de vistas ni fecha de carga -->
             <p>Información no disponible</p> 
           </div>
           <div class="flex">
             <div>
-              <!-- Aquí se muestra un texto fijo ya que no tenemos información del canal -->
               Canal no disponible
             </div>
             <p> - {{ video.snippet.channelTitle }}</p> 
           </div>
           <div class="pt-md desc">
-            <!-- <p>{{ video.snipp]et.description }}</p> -->
           </div>
         </div>
       </div>
-    <!-- FIN DEL CONTENEDOR -->
 
 
 </div>
